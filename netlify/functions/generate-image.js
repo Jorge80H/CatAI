@@ -6,11 +6,15 @@ exports.handler = async (event) => {
     const { prompt } = JSON.parse(event.body);
     console.log("Prompt recibido:", prompt);
 
+    if (!process.env.REPLICATE_API_TOKEN) {
+      throw new Error("REPLICATE_API_TOKEN no está configurado");
+    }
+
+    console.log("Token configurado:", process.env.REPLICATE_API_TOKEN.substring(0, 5) + "...");
+
     const replicate = new Replicate({
       auth: process.env.REPLICATE_API_TOKEN,
     });
-
-    console.log("Token de API configurado:", !!process.env.REPLICATE_API_TOKEN);
 
     const input = {
       prompt: prompt
@@ -34,7 +38,7 @@ exports.handler = async (event) => {
       body: JSON.stringify({ output: output }),
     };
   } catch (error) {
-    console.error("Error en generate-image:", error);
+    console.error("Error detallado:", error);
     return {
       statusCode: 500,
       headers: {
