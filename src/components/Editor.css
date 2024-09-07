@@ -1,0 +1,33 @@
+.editor {
+  background-color: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.editor h2 {
+  margin-bottom: 20px;
+}
+
+.editor textarea {
+  width: 100%;
+  height: 100px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.editor button {
+  width: 100%;
+}
+
+.loading, .error {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.error {
+  color: #e74c3c;
+}

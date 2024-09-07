@@ -1,8 +1,22 @@
 [build]
   command = "npm run build"
   publish = "build"
+  functions = "netlify/functions"
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["replicate"]
+
+[dev]
+  functionsPort = 8888
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[functions."generate-image"]
+  timeout = 30

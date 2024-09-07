@@ -1,0 +1,21 @@
+.result {
+  background-color: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.result h2 {
+  margin-bottom: 20px;
+}
+
+.result img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.result button {
+  margin-top: 20px;
+}
