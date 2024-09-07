@@ -2,22 +2,33 @@ const Replicate = require("replicate");
 
 exports.handler = async (event) => {
 	console.log("Función check-prediction iniciada");
-	const { predictionId } = JSON.parse(event.body);
-	console.log("ID de predicción recibido:", predictionId);
+	try {
+		const { output } = JSON.parse(event.body);
+		console.log("Output recibido:", output);
 
-	// Simulamos un delay para imitar el tiempo de procesamiento
-	await new Promise(resolve => setTimeout(resolve, 2000));
-
-	// URL de una imagen de gato de ejemplo
-	const fakeImageUrl = "https://cataas.com/cat";
-
-	return {
-		statusCode: 200,
-		headers: {
-			"Content-Type": "application/json",
-			"Access-Control-Allow-Origin": "*",
-			"Access-Control-Allow-Headers": "Content-Type",
-		},
-		body: JSON.stringify({ status: "succeeded", output: [fakeImageUrl] }),
-	};
+		// Como el modelo devuelve directamente la URL, no necesitamos hacer una verificación adicional
+		return {
+			statusCode: 200,
+			headers: {
+				"Content-Type": "application/json",
+				"Access-Control-Allow-Origin": "*",
+				"Access-Control-Allow-Headers": "Content-Type",
+			},
+			body: JSON.stringify({ status: "succeeded", output: output }),
+		};
+	} catch (error) {
+		console.error("Error en check-prediction:", error);
+		return {
+			statusCode: 500,
+			headers: {
+				"Content-Type": "application/json",
+				"Access-Control-Allow-Origin": "*",
+				"Access-Control-Allow-Headers": "Content-Type",
+			},
+			body: JSON.stringify({
+				error: "Error checking prediction status",
+				details: error.message,
+			}),
+		};
+	}
 };

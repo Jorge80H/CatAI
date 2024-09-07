@@ -16,31 +16,11 @@ function Editor() {
       const response = await axios.post('/.netlify/functions/generate-image', {
         prompt,
       });
-      const { predictionId } = response.data;
+      const { output } = response.data;
       
-      const pollInterval = setInterval(async () => {
-        try {
-          const statusResponse = await axios.post('/.netlify/functions/check-prediction', {
-            predictionId,
-          });
-          const { status, output } = statusResponse.data;
-          
-          if (status === 'succeeded') {
-            clearInterval(pollInterval);
-            setIsGenerating(false);
-            navigate('/result', { state: { imageUrl: output[0] } });
-          } else if (status === 'failed') {
-            clearInterval(pollInterval);
-            setIsGenerating(false);
-            setError('Error al generar la imagen. Por favor, intenta de nuevo.');
-          }
-        } catch (pollError) {
-          console.error('Error al verificar el estado:', pollError);
-          clearInterval(pollInterval);
-          setIsGenerating(false);
-          setError(`Error al verificar el estado: ${pollError.message}`);
-        }
-      }, 2000);
+      // Como ya tenemos la URL de la imagen, podemos navegar directamente a la página de resultados
+      setIsGenerating(false);
+      navigate('/result', { state: { imageUrl: output[0] } });
       
     } catch (error) {
       console.error('Error al generar la imagen:', error);
