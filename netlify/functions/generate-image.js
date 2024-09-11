@@ -1,12 +1,8 @@
 const Replicate = require("replicate");
 
 exports.handler = async (event) => {
-  console.log("Función generate-image iniciada");
   try {
     const { prompt } = JSON.parse(event.body);
-    console.log("Prompt recibido:", prompt);
-
-    console.log("REPLICATE_API_TOKEN configurado:", !!process.env.REPLICATE_API_TOKEN);
     
     if (!process.env.REPLICATE_API_TOKEN) {
       throw new Error("REPLICATE_API_TOKEN no está configurado");
